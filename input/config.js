@@ -29,11 +29,11 @@ const cleanName = (_str) => {
 const addRarityPercent = (_str) => {
   let rarityPercent;
   try {
-    rarityPercent = parseInt(_str.match(/\d+/g));
+    rarityPercent = parseInt(_str.match(/\d+/g)) || 100;
   } catch(e) {
     console.log(e);
   }
-  return rarityPercent;
+  return rarityPercent/100;
 }
 
 const getElements = (path) => {
@@ -41,19 +41,19 @@ const getElements = (path) => {
     .readdirSync(path)
     .filter((item) => !/(^|\/)\.[^\/\.]/g.test(item))
     .map((i, index) => {
-      console.log("Element: " + JSON.stringify({
-        "id": index + 1,
-        "name": cleanName(i),
-        "fileName": i,
-        "rarity": addRarity(i),
-        "rarityPercent": addRarityPercent(i),
-      }))
+      // console.log("Element: " + JSON.stringify({
+      //   "id": index + 1,
+      //   "name": cleanName(i),
+      //   "fileName": i,
+      //   "rarity": addRarity(i),
+      //   "rarityPercent": addRarityPercent(i),
+      // }))
       return {
         id: index + 1,
         name: cleanName(i),
         fileName: i,
         rarity: addRarity(i),
-        rarityPercent: addRarityPercent(i)
+        rarityPercent: addRarityPercent(i),
       };
     });
 };
