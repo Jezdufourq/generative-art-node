@@ -26,16 +26,34 @@ const cleanName = (_str) => {
   return name;
 };
 
+const addRarityPercent = (_str) => {
+  let rarityPercent;
+  try {
+    rarityPercent = parseInt(_str.match(/\d+/g));
+  } catch(e) {
+    console.log(e);
+  }
+  return rarityPercent;
+}
+
 const getElements = (path) => {
   return fs
     .readdirSync(path)
     .filter((item) => !/(^|\/)\.[^\/\.]/g.test(item))
     .map((i, index) => {
+      console.log("Element: " + JSON.stringify({
+        "id": index + 1,
+        "name": cleanName(i),
+        "fileName": i,
+        "rarity": addRarity(i),
+        "rarityPercent": addRarityPercent(i),
+      }))
       return {
         id: index + 1,
         name: cleanName(i),
         fileName: i,
         rarity: addRarity(i),
+        rarityPercent: addRarityPercent(i)
       };
     });
 };
